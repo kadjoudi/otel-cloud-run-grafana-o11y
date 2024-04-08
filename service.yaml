@@ -1,0 +1,52 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  annotations:
+    run.googleapis.com/launch-stage: BETA
+  name: grafana-o11y-otel 
+  labels:
+    cloud.googleapis.com/location: "europe-west9"
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/container-dependencies: '{"servicea":["otelcollector"], "serviceb":["otelcollector"]}'    
+    spec:
+      containers:
+        - image: "europe-west9-docker.pkg.dev/blog-grafana-o11y-otel/grafana-o11y-otel/servicea:latest"
+          name: servicea
+          env:
+            - name: OTEL_SERVICE_NAME
+              value: "ServiceA"
+            - name: OTEL_PROPAGATORS
+              value: "tracecontext"
+            - name: OTEL_LOG_LEVEL
+              value: "info"
+            - name: OTEL_EXPORTER_OTLP_PROTOCOL
+              value: "http/protobuf"
+          ports:
+            - containerPort: 8080
+        - image: "europe-west9-docker.pkg.dev/blog-grafana-o11y-otel/grafana-o11y-otel/serviceb:latest"
+          name: serviceb
+          env:
+            - name: PORT
+              value: "5050"
+            - name: OTEL_SERVICE_NAME
+              value: "ServiceB"
+            - name: OTEL_PROPAGATORS
+              value: "tracecontext"
+            - name: OTEL_LOG_LEVEL
+              value: "info"
+            - name: OTEL_EXPORTER_OTLP_PROTOCOL
+              value: "http/protobuf"
+
+        - image: "europe-west9-docker.pkg.dev/blog-grafana-o11y-otel/grafana-o11y-otel/otelcollector:latest"
+          name: otelcollector
+          startupProbe:
+            httpGet:
+              path: /
+              port: 13133  
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 512Mi

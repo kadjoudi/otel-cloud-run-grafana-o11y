@@ -1,0 +1,16 @@
+{
+    "name": "ServiceA",
+    "version": "1.0.0",
+    "description": "serviceA running in Cloud Run",
+    "main": "index.js",
+    "scripts": {
+      "start": "node --require @opentelemetry/auto-instrumentations-node/register  serviceA.js"
+    },
+    "dependencies": {
+      "@opentelemetry/api": "^1.8.0",
+      "@opentelemetry/auto-instrumentations-node": "^0.43.0",
+      "axios": "^1.6.2",
+      "express": "^4.18.2"
+    }
+  }
+  
