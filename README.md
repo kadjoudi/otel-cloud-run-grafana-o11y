@@ -1,6 +1,6 @@
 # Cloud Run Observability with OTel and Grafana Application Observability
 
-In this blog post, we explore enhancing observability in serverless environments, particularly focusing on Google Cloud Run, leveraging OpenTelemetry (OTel) and Grafana Application Observability. We highlight the challenges posed by serverless platforms like Cloud Run and how OTel push-based telemetry approach addresses them. We highlight Google recent update introducing Multicontainer deployment, enabling sidecar containers alongside the main service, facilitating observability and other functionalities.
+In this blog post, we explore enhancing observability in serverless environments, particularly focusing on Google Cloud Run, leveraging OpenTelemetry (OTel) and Grafana Application Observability (app o11y). We highlight the challenges posed by serverless platforms like Cloud Run and how OTel push-based telemetry approach addresses them. We highlight Google recent update introducing Multicontainer deployment, enabling sidecar containers alongside the main service, facilitating observability and other functionalities.
 
 ## Setting up Cloud Run Multicontainer Deployment
 
